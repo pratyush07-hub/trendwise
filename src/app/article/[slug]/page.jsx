@@ -32,4 +32,4 @@ export default async function BlogDetailPage({ params }) {
       </div>
     </main>
   );
-}
+} 

@@ -15,6 +15,9 @@ export default function CreatePostPage() {
   const [category, setCategory] = useState("");
   const [creating, setCreating] = useState(false);
 
+  const [topic, setTopic] = useState("");
+  const [generating, setGenerating] = useState(false);
+
   useEffect(() => {
     async function checkAccess() {
       const session = await getSession();
@@ -28,13 +31,12 @@ export default function CreatePostPage() {
     checkAccess();
   }, [router]);
 
-  const generateSlug = (text) => {
-    return text
+  const generateSlug = (text) =>
+    text
       .toLowerCase()
       .trim()
-      .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric chars with hyphen
-      .replace(/^-+|-+$/g, "");    // Remove leading/trailing hyphens
-  };
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,12 +59,56 @@ export default function CreatePostPage() {
     }
   };
 
+  const generateWithAI = async () => {
+    if (!topic.trim()) return alert("Please enter a topic first.");
+    setGenerating(true);
+
+    const res = await fetch("/api/generate-post", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ topic }),
+    });
+    const data = await res.json();
+
+    if (res.ok && data) {
+      const aiTitle = data.title || topic;
+      const aiSlug = generateSlug(aiTitle);
+      setTitle(aiTitle);
+      setSlug(aiSlug);
+      setCategory(data.category || "General");
+      setContent(data.content || "");
+    } else {
+      alert("Failed to generate content.");
+    }
+
+    setGenerating(false);
+  };
+
   if (loading) return <p className="p-4">Checking access...</p>;
   if (!allowed) return null;
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Create a New Blog</h1>
+
+      <div className="mb-6">
+        <input
+          type="text"
+          placeholder="Enter topic for AI to generate content"
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
+          className="w-full border p-2 rounded mb-2"
+        />
+        <button
+          type="button"
+          onClick={generateWithAI}
+          className="bg-indigo-600 text-white px-4 py-2 rounded"
+          disabled={generating}
+        >
+          {generating ? "Generating..." : "Generate with AI"}
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
