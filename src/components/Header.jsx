@@ -6,57 +6,49 @@ import {
   NavbarToggle,
   NavbarLink,
   Button,
-  TextInput,
 } from "flowbite-react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { HiSearch } from "react-icons/hi";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation"; // ✅ Import usePathname
+import AuthButton from "./AuthButton";
 
 const Header = () => {
-  const pathname = usePathname(); // ✅ Get the current route
-  const [isDark, setIsDark] = useState(false);
+  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (document.documentElement.classList.contains("dark")) {
-      setIsDark(true);
-    }
+    setMounted(true);
   }, []);
 
-  const toggleDarkMode = () => {
-    const root = document.documentElement;
-    root.classList.toggle("dark");
-    setIsDark(root.classList.contains("dark"));
-  };
-
   return (
-    <Navbar fluid rounded className="border-b dark:border-gray-700">
-      {/* Custom brand (without Navbar.Brand) */}
+    <Navbar fluid className="border-b">
       <a
         href="/"
-        className="text-2xl font-bold text-blue-600 dark:text-white whitespace-nowrap"
+        className="text-2xl font-bold text-white whitespace-nowrap"
       >
         TrendWise
       </a>
 
       <div className="flex md:order-2 items-center gap-2">
-        <TextInput
-          type="text"
-          placeholder="Search"
-          icon={HiSearch}
-          className="hidden md:block"
-        />
+        <div className="relative hidden md:block">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+            <HiSearch />
+          </div>
+          <input
+            type="text"
+            placeholder="Search"
+            className="block w-full pl-10 pr-4 py-2 rounded-md border text-white border-gray-100 focus:outline-none "
+          />
+        </div>
 
-        <Button gradientDuoTone="purpleToBlue">Sign In</Button>
-
-        <Button pill size="sm" color="gray" onClick={toggleDarkMode}>
-          {isDark ? "🌙" : "☀️"}
-        </Button>
+        <AuthButton />
 
         <NavbarToggle />
       </div>
 
       <NavbarCollapse>
-        {/* Active link detection using pathname */}
         <NavbarLink href="/" active={pathname === "/"}>
           Home
         </NavbarLink>
@@ -64,7 +56,7 @@ const Header = () => {
           About
         </NavbarLink>
         <NavbarLink href="/blog" active={pathname === "/blog"}>
-          Blog
+          All Blogs
         </NavbarLink>
       </NavbarCollapse>
     </Navbar>
@@ -72,4 +64,3 @@ const Header = () => {
 };
 
 export default Header;
-
