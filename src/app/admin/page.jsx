@@ -13,9 +13,13 @@ export default async function AdminPage() {
   }
 
   await connectMongoDb();
-  const user = await (await import("@/lib/models/user.model")).default.findOne({
+  const user = await (
+    await import("@/lib/models/user.model")
+  ).default.findOne({
     email: session.user.email,
   });
+  console.log("SESSION", session);
+  console.log("USER", user);
 
   if (!user?.isAdmin) {
     redirect("/");
@@ -55,7 +59,10 @@ export default async function AdminPage() {
 
       <ul className="space-y-4">
         {recentPosts.map((post) => (
-          <li key={post._id} className="border p-4 rounded-lg shadow-sm bg-white">
+          <li
+            key={post._id}
+            className="border p-4 rounded-lg shadow-sm bg-white"
+          >
             <h3 className="font-semibold text-lg">{post.title}</h3>
             <p className="text-sm text-gray-500">Category: {post.category}</p>
             <Link
