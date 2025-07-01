@@ -6,74 +6,92 @@ import { connectMongoDb } from "@/lib/mongodb/mongoose";
 import Article from "@/lib/models/article.model";
 
 export default async function AdminPage() {
-  const session = await getServerSession(authOptions);
+  try {
+    const session = await getServerSession(authOptions);
 
-  if (!session || !session.user) {
-    redirect("/");
-  }
+    if (!session || !session.user) {
+      console.log("No session found, redirecting to home");
+      redirect("/");
+    }
 
-  await connectMongoDb();
-  const user = await (
-    await import("@/lib/models/user.model")
-  ).default.findOne({
-    email: session.user.email,
-  });
-  console.log("SESSION", session);
-  console.log("USER", user);
+    console.log("Session found:", { email: session.user.email, isAdmin: session.user.isAdmin });
 
-  if (!user?.isAdmin) {
-    redirect("/");
-  }
+    await connectMongoDb();
+    const user = await (
+      await import("@/lib/models/user.model")
+    ).default.findOne({
+      email: session.user.email,
+    });
+    
+    console.log("Database user:", user);
 
-  // ✅ FIXED: define allPosts before using
-  const allPosts = await Article.find();
-  const categoriesSet = new Set(allPosts.map((post) => post.category));
-  const totalCategories = categoriesSet.size;
-  const recentPosts = await Article.find().sort({ createdAt: -1 }).limit(5);
+    if (!user?.isAdmin) {
+      console.log("User is not admin, redirecting to home");
+      redirect("/");
+    }
 
-  return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4">Welcome, Admin {user.name}</h1>
+    // ✅ FIXED: define allPosts before using
+    const allPosts = await Article.find();
+    const categoriesSet = new Set(allPosts.map((post) => post.category));
+    const totalCategories = categoriesSet.size;
+    const recentPosts = await Article.find().sort({ createdAt: -1 }).limit(5);
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white shadow p-4 rounded-lg">
-          <p className="text-sm text-gray-500">Total Posts</p>
-          <p className="text-2xl font-bold">{allPosts.length}</p>
+    return (
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-4">Welcome, Admin {user.name}</h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="bg-white shadow p-4 rounded-lg">
+            <p className="text-sm text-gray-500">Total Posts</p>
+            <p className="text-2xl font-bold">{allPosts.length}</p>
+          </div>
+          <div className="bg-white shadow p-4 rounded-lg">
+            <p className="text-sm text-gray-500">Categories</p>
+            <p className="text-2xl font-bold">{totalCategories}</p>
+          </div>
+          <div className="bg-white shadow p-4 rounded-lg">
+            <p className="text-sm text-gray-500">Recent Activity</p>
+            <p className="text-2xl font-bold">New Posts Added</p>
+          </div>
         </div>
-        <div className="bg-white shadow p-4 rounded-lg">
-          <p className="text-sm text-gray-500">Categories</p>
-          <p className="text-2xl font-bold">{totalCategories}</p>
+
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Recent Posts</h2>
+          <Link href="/admin/posts" className="text-sm text-blue-600 underline">
+            View All
+          </Link>
         </div>
-        <div className="bg-white shadow p-4 rounded-lg">
-          <p className="text-sm text-gray-500">Recent Activity</p>
-          <p className="text-2xl font-bold">New Posts Added</p>
-        </div>
+
+        <ul className="space-y-4">
+          {recentPosts.map((post) => (
+            <li
+              key={post._id}
+              className="border p-4 rounded-lg shadow-sm bg-white"
+            >
+              <h3 className="font-semibold text-lg">{post.title}</h3>
+              <p className="text-sm text-gray-500">Category: {post.category}</p>
+              <Link
+                href={`/article/${post.slug}`}
+                className="text-blue-600 text-sm underline"
+              >
+                View Article
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
-
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Recent Posts</h2>
-        <Link href="/admin/posts" className="text-sm text-blue-600 underline">
-          View All
+    );
+  } catch (error) {
+    console.error("Admin page error:", error);
+    // In production, you might want to show a user-friendly error page
+    return (
+      <div className="p-6">
+        <h1 className="text-2xl font-bold text-red-600 mb-4">Error Loading Admin Page</h1>
+        <p className="text-gray-600">Please try again later or contact support.</p>
+        <Link href="/" className="text-blue-600 underline mt-4 inline-block">
+          Return to Home
         </Link>
       </div>
-
-      <ul className="space-y-4">
-        {recentPosts.map((post) => (
-          <li
-            key={post._id}
-            className="border p-4 rounded-lg shadow-sm bg-white"
-          >
-            <h3 className="font-semibold text-lg">{post.title}</h3>
-            <p className="text-sm text-gray-500">Category: {post.category}</p>
-            <Link
-              href={`/article/${post.slug}`}
-              className="text-blue-600 text-sm underline"
-            >
-              View Article
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    );
+  }
 }

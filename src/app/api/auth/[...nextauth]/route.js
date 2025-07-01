@@ -2,8 +2,6 @@ import User from "@/lib/models/user.model";
 import { connectMongoDb } from "@/lib/mongodb/mongoose";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { signIn } from "next-auth/react";
-
 
 const authOptions = {
   providers: [
@@ -20,44 +18,65 @@ const authOptions = {
     }),
   ],
   callbacks: {
-    async session({ session, user }) {
-      // Fetch the user from the database to get isAdmin
-      const dbUser = await User.findOne({ email: session.user.email });
-      session.user.isAdmin = dbUser?.isAdmin || false;
-      return session;
+    async session({ session, token }) {
+      try {
+        await connectMongoDb();
+        // Fetch the user from the database to get isAdmin
+        const dbUser = await User.findOne({ email: session.user.email });
+        session.user.isAdmin = dbUser?.isAdmin || false;
+        return session;
+      } catch (error) {
+        console.error("Session callback error:", error);
+        session.user.isAdmin = false;
+        return session;
+      }
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.isAdmin = user.isAdmin;
+      }
+      return token;
     },
     async signIn({ user, account }) {
-      // console.log("user: ", user);
-      // console.log("account: ", account);
-      const { name, email , isAdmin } = user;
       if (account.provider === "google") {
         try {
           await connectMongoDb();
-          const userExits = await User.findOne({ email });
-          if(!userExits) {
-            const res = await fetch("/api/user", {
+          const userExists = await User.findOne({ email: user.email });
+          
+          if (!userExists) {
+            const res = await fetch(`${process.env.NEXTAUTH_URL}/api/user`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                name,
-                email,
-                isAdmin,
+                name: user.name,
+                email: user.email,
+                isAdmin: false, // Default to false for new users
               }),
             });
-            if (res.ok) {
-              return user;
+            
+            if (!res.ok) {
+              console.error("Failed to create user");
+              return false;
             }
           }
-          return user;
+          return true;
         } catch (error) {
-          console.log(error);
+          console.error("SignIn callback error:", error);
+          return false;
         }
       }
+      return true;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "/",
+  },
 };
 
 const handler = NextAuth(authOptions);
