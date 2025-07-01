@@ -9,7 +9,7 @@ export default async function AdminPage() {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
-    redirect("/login");
+    redirect("/");
   }
 
   await connectMongoDb();
