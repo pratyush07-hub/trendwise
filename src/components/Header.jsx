@@ -58,6 +58,9 @@ const Header = () => {
         <NavbarLink href="/blog" active={pathname === "/blog"}>
           All Blogs
         </NavbarLink>
+        <NavbarLink href="/admin" active={pathname === "/admin"}>
+          Admin
+        </NavbarLink>
       </NavbarCollapse>
     </Navbar>
   );
