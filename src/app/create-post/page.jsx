@@ -88,7 +88,7 @@ export default function CreatePostPage() {
   if (!allowed) return null;
 
   return (
-    <div className="p-8 max-w-2xl mx-auto bg-white rounded-xl shadow-lg mt-10 border border-gray-100">
+    <div className="p-8 w-full md:w-[70%] mx-auto bg-white rounded-xl shadow-lg mt-10 border border-gray-100">
       <h1 className="text-3xl font-extrabold mb-6 text-center text-indigo-700">Create a New Blog</h1>
 
       <div className="mb-8 flex flex-col md:flex-row items-center gap-4 bg-indigo-50 p-4 rounded-lg">
@@ -109,7 +109,7 @@ export default function CreatePostPage() {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 w-full">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-1 flex flex-col gap-6 md:w-2/5">
             <input
