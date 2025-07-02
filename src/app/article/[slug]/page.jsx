@@ -1,4 +1,5 @@
 import { connectMongoDb } from "@/lib/mongodb/mongoose";
+import User from "@/lib/models/user.model";
 import Article from "@/lib/models/article.model";
 
 export default async function BlogDetailPage({ params }) {
