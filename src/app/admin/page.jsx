@@ -10,7 +10,8 @@ export default async function AdminPage() {
 
   if (!session || !session.user) {
     console.log("No session found, redirecting to home");
-    redirect("/");
+    
+    redirect("/?error=unauthorized");
   }
 
   await connectMongoDb();
@@ -21,7 +22,9 @@ export default async function AdminPage() {
 
   if (!user?.isAdmin) {
     console.log("User is not admin, redirecting to home");
-    redirect("/");
+    
+    redirect("/?error=unauthorized");
+
   }
 
   const allPosts = await Article.find();
