@@ -88,28 +88,28 @@ export default function CreatePostPage() {
   if (!allowed) return null;
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Create a New Blog</h1>
+    <div className="p-8 max-w-2xl mx-auto bg-white rounded-xl shadow-lg mt-10 border border-gray-100">
+      <h1 className="text-3xl font-extrabold mb-6 text-center text-indigo-700">Create a New Blog</h1>
 
-      <div className="mb-6">
+      <div className="mb-8 flex flex-col md:flex-row items-center gap-4 bg-indigo-50 p-4 rounded-lg">
         <input
           type="text"
           placeholder="Enter topic for AI to generate content"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          className="w-full border p-2 rounded mb-2"
+          className="flex-1 border-2 border-indigo-200 focus:border-indigo-500 transition p-2 rounded-lg outline-none bg-white shadow-sm"
         />
         <button
           type="button"
           onClick={generateWithAI}
-          className="bg-indigo-600 text-white px-4 py-2 rounded"
+          className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white px-6 py-2 rounded-lg font-semibold shadow hover:from-indigo-600 hover:to-blue-600 transition disabled:opacity-60"
           disabled={generating}
         >
           {generating ? "Generating..." : "Generate with AI"}
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <input
           type="text"
           placeholder="Title"
@@ -119,7 +119,7 @@ export default function CreatePostPage() {
             setTitle(t);
             setSlug(generateSlug(t));
           }}
-          className="w-full border p-2 rounded"
+          className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm"
           required
         />
         <input
@@ -127,7 +127,7 @@ export default function CreatePostPage() {
           placeholder="Slug"
           value={slug}
           onChange={(e) => setSlug(generateSlug(e.target.value))}
-          className="w-full border p-2 rounded"
+          className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm"
           required
         />
         <input
@@ -135,7 +135,7 @@ export default function CreatePostPage() {
           placeholder="Category (e.g., AI, Tech)"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full border p-2 rounded"
+          className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm"
           required
         />
         <textarea
@@ -143,12 +143,12 @@ export default function CreatePostPage() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows="8"
-          className="w-full border p-2 rounded"
+          className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm resize-none text-base"
           required
         ></textarea>
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg font-bold text-lg shadow hover:from-blue-600 hover:to-indigo-700 transition disabled:opacity-60"
           disabled={creating}
         >
           {creating ? "Creating..." : "Create Blog"}

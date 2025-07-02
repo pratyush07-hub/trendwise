@@ -58,6 +58,9 @@ const Header = () => {
         <NavbarLink href="/blog" active={pathname === "/blog"}>
           All Blogs
         </NavbarLink>
+        <NavbarLink href="/create-post" active={pathname === "/create-post"}>
+          CreatePost
+        </NavbarLink>
         <NavbarLink href="/admin" active={pathname === "/admin"}>
           AdminDashboard
         </NavbarLink>
