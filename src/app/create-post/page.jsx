@@ -110,42 +110,48 @@ export default function CreatePostPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => {
-            const t = e.target.value;
-            setTitle(t);
-            setSlug(generateSlug(t));
-          }}
-          className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Slug"
-          value={slug}
-          onChange={(e) => setSlug(generateSlug(e.target.value))}
-          className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Category (e.g., AI, Tech)"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm"
-          required
-        />
-        <textarea
-          placeholder="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          rows="8"
-          className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm resize-none text-base"
-          required
-        ></textarea>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex-1 flex flex-col gap-6 md:w-2/5">
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => {
+                const t = e.target.value;
+                setTitle(t);
+                setSlug(generateSlug(t));
+              }}
+              className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Slug"
+              value={slug}
+              onChange={(e) => setSlug(generateSlug(e.target.value))}
+              className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Category (e.g., AI, Tech)"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm"
+              required
+            />
+          </div>
+          <div className="flex-1 md:w-3/5">
+            <textarea
+              placeholder="Content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              rows="8"
+              className="w-full h-full min-h-[250px] md:min-h-[350px] border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm resize-none text-base md:h-[70%]"
+              required
+            ></textarea>
+          </div>
+        </div>
         <button
           type="submit"
           className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg font-bold text-lg shadow hover:from-blue-600 hover:to-indigo-700 transition disabled:opacity-60"
