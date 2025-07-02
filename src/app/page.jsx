@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import ErrorAlert from "@/components/ErrorAlert";
 
@@ -28,7 +28,9 @@ export default function HomePage() {
   return (
     <main className="min-h-screen px-4 py-12 max-w-6xl mx-auto" style={{ backgroundColor: '#eaf4fb' }}>
       {/* Header */}
-      <ErrorAlert />
+      <Suspense fallback={null}>
+        <ErrorAlert />
+      </Suspense>
       <div className="text-center mb-14">
         <div className="flex justify-center mb-3">
           <span className="text-4xl">🪐</span>
