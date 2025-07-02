@@ -59,7 +59,7 @@ const Header = () => {
           All Blogs
         </NavbarLink>
         <NavbarLink href="/admin" active={pathname === "/admin"}>
-          Admin
+          AdminDashboard
         </NavbarLink>
       </NavbarCollapse>
     </Navbar>
