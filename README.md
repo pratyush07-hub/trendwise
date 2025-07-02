@@ -2,8 +2,6 @@
 
 Trendwise is a modern blog platform where authenticated users can write, explore, and manage blog posts. It features a clean, responsive UI, admin-only dashboard, AI-assisted content generation, and more.
 
-![Trendwise Banner](https://your-image-url-if-any.com) <!-- optional -->
-
 ## 🌐 Live Demo
 👉 [Visit the Live App](https://trendwise-rho.vercel.app)
 
