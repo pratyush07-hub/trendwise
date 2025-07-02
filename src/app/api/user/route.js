@@ -9,7 +9,7 @@ dotenv.config();
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { name, email } = body || {};
+    const { name, email, isAdmin = false } = body || {};
 
     if (!name || !email) {
       return NextResponse.json(
@@ -19,7 +19,7 @@ export async function POST(request) {
     }
 
     await connectMongoDb(); // Assuming this connects to your MongoDB
-    const user = await User.create({ name, email });
+    const user = await User.create({ name, email, isAdmin });
 
     return NextResponse.json({ message: "User Registered", user }, { status: 201 });
   } catch (error) {
