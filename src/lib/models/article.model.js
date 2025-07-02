@@ -20,6 +20,14 @@ const articleSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    authorName: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    authorEmail: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
   },
   { timestamps: true }
 );

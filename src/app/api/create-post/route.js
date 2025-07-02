@@ -29,7 +29,7 @@ export async function POST(request) {
 
     if (!user) {
       return NextResponse.json(
-        { message: "Admin user not found" },
+        { message: "User not found in database" },
         { status: 404 }
       );
     }
@@ -40,6 +40,8 @@ export async function POST(request) {
       content,
       category,
       createdBy: user._id,
+      authorName: user.name,
+      authorEmail: user.email,
     });
 
     return NextResponse.json(
