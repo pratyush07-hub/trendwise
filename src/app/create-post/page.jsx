@@ -53,7 +53,7 @@ export default function CreatePostPage() {
     setCreating(false);
     if (res.ok) {
       alert("✅ Blog created successfully!");
-      router.push("/admin/posts");
+      router.push("/blog");
     } else {
       alert("❌ Failed to create blog.");
     }
