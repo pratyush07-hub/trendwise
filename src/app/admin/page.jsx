@@ -3,6 +3,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { connectMongoDb } from "@/lib/mongodb/mongoose";
+import User from "@/lib/models/user.model";
 import Article from "@/lib/models/article.model";
 
 export default async function AdminPage() {
@@ -16,9 +17,7 @@ export default async function AdminPage() {
 
   await connectMongoDb();
 
-  const user = await (
-    await import("@/lib/models/user.model")
-  ).default.findOne({ email: session.user.email });
+  const user = await User.findOne({ email: session.user.email });
 
   if (!user?.isAdmin) {
     console.log("User is not admin, redirecting to home");

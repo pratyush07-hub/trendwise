@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import User from "@/lib/models/user.model";
 import Article from "@/lib/models/article.model";
 import { connectMongoDb } from "@/lib/mongodb/mongoose";
 
