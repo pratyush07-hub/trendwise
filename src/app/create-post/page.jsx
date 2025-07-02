@@ -141,13 +141,13 @@ export default function CreatePostPage() {
               required
             />
           </div>
-          <div className="flex-1 md:w-3/5">
+          <div className="flex-1 md:w-[70%] flex items-stretch">
             <textarea
               placeholder="Content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows="8"
-              className="w-full h-full min-h-[250px] md:min-h-[350px] border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm resize-none text-base md:h-[70%]"
+              className="w-full h-full min-h-[200px] md:min-h-0 md:h-[60vh] border-2 border-gray-200 focus:border-indigo-400 transition p-3 rounded-lg outline-none text-lg shadow-sm resize-none text-base"
               required
             ></textarea>
           </div>
