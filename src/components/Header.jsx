@@ -23,10 +23,10 @@ const Header = () => {
   }, []);
 
   return (
-    <Navbar fluid className="border-b">
+    <Navbar fluid className="border-b bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
       <a
         href="/"
-        className="text-2xl font-bold text-white whitespace-nowrap"
+        className="text-2xl font-bold whitespace-nowrap text-gray-900 dark:text-white"
       >
         TrendWise
       </a>
