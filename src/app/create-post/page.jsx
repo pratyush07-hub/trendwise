@@ -24,7 +24,7 @@ export default function CreatePostPage() {
       if (session && session.user?.email) {
         setAllowed(true);
       } else {
-        router.push("/");
+        router.push("/?error=unauthorized");
       }
       setLoading(false);
     }
