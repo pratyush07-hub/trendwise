@@ -78,7 +78,7 @@ export default function CreatePostPage() {
       setCategory(data.category || "General");
       setContent(data.content || "");
     } else {
-      alert("Failed to generate content.");
+      alert("Failed to generate content: ${data.message}");
     }
 
     setGenerating(false);
