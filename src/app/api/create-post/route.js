@@ -10,15 +10,17 @@ export async function POST(request) {
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user?.email) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      console.log("DEBUG: No session or user email", { session });
+      return NextResponse.json({ message: "Unauthorized", debug: { session } }, { status: 401 });
     }
 
     const body = await request.json();
     const { title, slug, content, category } = body || {};
 
     if (!title || !slug || !content || !category) {
+      console.log("DEBUG: Missing fields", { title, slug, content, category });
       return NextResponse.json(
-        { message: "All fields are required" },
+        { message: "All fields are required", debug: { title, slug, content, category } },
         { status: 400 }
       );
     }
@@ -28,8 +30,9 @@ export async function POST(request) {
     const user = await User.findOne({ email: session.user.email });
 
     if (!user) {
+      console.log("DEBUG: User not found in DB", { email: session.user.email });
       return NextResponse.json(
-        { message: "User not found in database" },
+        { message: "User not found in database", debug: { email: session.user.email } },
         { status: 404 }
       );
     }
@@ -51,7 +54,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("Error in POST /api/create-post:", error);
     return NextResponse.json(
-      { message: "Internal Server Error", error: error.message },
+      { message: "Internal Server Error", error: error.message, stack: error.stack },
       { status: 500 }
     );
   }
