@@ -21,12 +21,10 @@ const articleSchema = new mongoose.Schema(
       ref: "User",
     },
     authorName: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
     },
     authorEmail: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
     }
   },
   { timestamps: true }
