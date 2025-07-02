@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧩 Trendwise – A Full-Stack Blog Platform
 
-## Getting Started
+Trendwise is a modern blog platform where authenticated users can write, explore, and manage blog posts. It features a clean, responsive UI, admin-only dashboard, AI-assisted content generation, and more.
 
-First, run the development server:
+![Trendwise Banner](https://your-image-url-if-any.com) <!-- optional -->
+
+## 🌐 Live Demo
+👉 [Visit the Live App](https://trendwise-rho.vercel.app)
+
+## 📂 GitHub Repo
+🔗 [https://github.com/pratyush07-hub/trendwise](https://github.com/pratyush07-hub/trendwise)
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: [Next.js (App Router)](https://nextjs.org/docs/app)
+- **Backend**: [MongoDB](https://www.mongodb.com/) + [Mongoose](https://mongoosejs.com/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Auth**: [NextAuth.js (Google Sign-In)](https://next-auth.js.org/)
+- **Deployment**: [Vercel](https://vercel.com/)
+
+---
+
+## ✨ Features
+
+- ✅ Google authentication with `NextAuth.js`
+- ✅ Authenticated users can create and publish posts
+- ✅ AI-powered content generation based on a topic
+- ✅ Role-based admin dashboard for content management
+- ✅ Category-based filtering and recent post display
+- ✅ Server-side rendering with SEO-ready structure
+- ✅ Clean, responsive design with Tailwind CSS
+
+---
+
+## 🚧 In Progress
+
+- 💬 Comment functionality
+- 📊 View tracking for posts
+- 🗺️ SEO enhancements: `sitemap.xml` & `robots.txt`
+
+---
+
+## 🧑‍💻 Getting Started
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/pratyush07-hub/trendwise.git
+cd trendwise
